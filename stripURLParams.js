@@ -1,24 +1,22 @@
-function stripUrlParams(url, paramsToStrip) {
-    let regexForUrlQueryStrings = /(\?|\&)\w+\=\w+/g;
-    let urlQueryStrings = url.match(regexForUrlQueryStrings);
-    let resultUrl = "";
-    let keyStore = {}
+function stripUrlParams(url, paramsToStrip = []) {
+   const regexForUrlQueryStrings = /(\?|\&)\w+\=\w+/g;
+   const urlQueryStrings = url.match(regexForUrlQueryStrings);
+   const keyStore = {}
+   let resultUrl = url;
 
-    for (let i = 0; i < urlQueryStrings.length; i++) {
-        const pair = urlQueryStrings[i].slice(1);
-        const key = pair.split('=')[0]
+   if (urlQueryStrings) {
+      for (let i = 0; i < urlQueryStrings.length; i++) {
+         const pair = urlQueryStrings[i].slice(1);
+         const key = pair.split('=')[0];
 
-         if (keyStore[key]) {
-            resultUrl = url.replace(urlQueryStrings[i], "");
-         } 
+         if (keyStore[key] || (paramsToStrip.indexOf(key) >= 0)) {
+            resultUrl = resultUrl.replace(urlQueryStrings[i], "");
+         }
          else {
             keyStore[key] = pair.split('=')[1];
          }
-    }
-    
-    
-    
-    return resultUrl;
-}
+      }
+   }
 
-console.log(stripUrlParams('www.codewars.com?a=1&b=2&a=2'));
+   return resultUrl;
+}
