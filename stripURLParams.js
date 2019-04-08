@@ -20,3 +20,4 @@ function stripUrlParams(url, paramsToStrip = []) {
 
    return resultUrl;
 }
+stripUrlParams('www.codewars.com?a=1&b=2&a=2');
