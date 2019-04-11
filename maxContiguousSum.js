@@ -29,7 +29,6 @@ function maxContiguousSum(arr) {
 
     for (let i = 0; i < arr.length; i++) {
         let num = arr[i];
-        //( currSum + num > currSum ) ? currSum += num : currSum = 0;
         if(currSum + num > currSum) {
             currSum += num
             currArray.push(num)
