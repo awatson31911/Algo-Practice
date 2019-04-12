@@ -1,5 +1,5 @@
-function twoLowestSum(numArr: number[]): number {
-    const numHash = {};
+function twoLowestSum(numArr: number[]) {
+    const numHash: any = {};
     let lowestNum = numArr[0], nextLowestNum = numArr[0];
 
     for (let i = 0; i < numArr.length; i++) {
