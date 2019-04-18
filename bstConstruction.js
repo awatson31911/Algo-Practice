@@ -10,18 +10,28 @@ class BST {
     }
 
     insert(value) {
-        // Write your code here.
-        // Do not edit the return statement of this method.
+        
+
         return this;
     }
 
     contains(value) {
-        // Write your code here.
+        if (this.value === value) return true;
+        if (this.left === null && this.right === null) return false;
+
+        const isInLeftTree = (value < this.value) && this.left != null
+            ? this.left.contains(value)
+            : false;
+        const isInRightTree = (value > this.value) && this.right != null
+            ? this.right.contains(value)
+            : false;
+
+        return this.value === value || isInLeftTree || isInRightTree;
     }
 
     remove(value) {
-        // Write your code here.
-        // Do not edit the return statement of this method.
+
+
         return this;
     }
 }
