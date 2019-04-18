@@ -7,10 +7,25 @@ class BST {
         this.value = value;
         this.left = null;
         this.right = null;
-    }
+    } 
 
-    insert(value) {
-        
+    insert(value, direction) {
+        const newTree = new BST(value);
+        newTree.left = null;
+        newTree.right = null;
+        const RIGHT = 'RIGHT';
+        const LEFT = 'LEFT';
+
+        if (this.left === null && direction === LEFT) {
+            this.left = newTree;
+            return;
+        } else if (this.right === null && direction === RIGHT) {
+            this.right = newTree;
+            return;
+        }
+
+        if (value > this.value) {this.value.right.insert(value, direction = RIGHT); }
+        if (value < this.value) {this.value.left.insert(value, direction = LEFT); }
 
         return this;
     }
