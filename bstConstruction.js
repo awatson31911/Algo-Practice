@@ -7,25 +7,29 @@ class BST {
         this.value = value;
         this.left = null;
         this.right = null;
-    } 
+    }
 
-    insert(value, direction) {
+    insert(value) {
         const newTree = new BST(value);
-        newTree.left = null;
-        newTree.right = null;
-        const RIGHT = 'RIGHT';
-        const LEFT = 'LEFT';
-
-        if (this.left === null && direction === LEFT) {
-            this.left = newTree;
-            return;
-        } else if (this.right === null && direction === RIGHT) {
-            this.right = newTree;
-            return;
+        let currentNode = this;
+        
+        while(true) {
+            if (value < currentNode.value) {
+                if (currentNode.left === null) {
+                    currentNode.left = newTree;
+                    break;
+                } else {
+                    currentNode = currentNode.left;
+                }
+            } else {
+                if (currentNode.right === null) {
+                    currentNode.right = newTree;
+                    break;
+                } else {
+                    currentNode = currentNode.right;
+                }
+            }
         }
-
-        if (value > this.value) {this.value.right.insert(value, direction = RIGHT); }
-        if (value < this.value) {this.value.left.insert(value, direction = LEFT); }
 
         return this;
     }
@@ -44,12 +48,67 @@ class BST {
         return this.value === value || isInLeftTree || isInRightTree;
     }
 
-    remove(value) {
+    remove(value, parentNode = null) {
+        // Iterate through and find value
+        // infinte while loop where < iterate left, > iterate right until value found 
+        // if found see edge cases
+        let currentNode = this;
 
+        while (currentNode !== null) {
+            if (value < currentNode.value) {
+                parentNode = currentNode;
+                currentNode = currentNode.left;
+            }
+            else if (value > currentNode.value) {
+                parentNode = currentNode;
+                currentNode = currentNode.right;
+            }
+            else { // we have reached the node to remove
+                if (currentNode.left !== null && currentNode.right !== null) {
+                    currentNode.value = currentNode.right.getMinimumValue();
+                    currentNode.right.remove(currentNode.value, currentNode);
+                } else if (parentNode === null) {
+                    if (currentNode.left !== null) {
+                        currentNode.value = currentNode.left.value;
+                        currentNode.right = currentNode.left.right;
+                        currentNode.left = currentNode.left.left;
 
+                    }
+                    else if (currentNode.right !== null) {
+                        currentNode.value = currentNode.right.value;
+                        currentNode.left = currentNode.right.left;
+                        currentNode.right = currentNode.right.right;
+                    } else {
+                        currentNode.value = null;
+                    }
+                }
+                else if (parentNode.left === currentNode) {
+                    parentNode.left = currentNode.left !== null ? currentNode.left : currentNode.right;
+                }
+                else if (parentNode.right === currentNode) {
+                    parentNode.right = currentNode.left !== null ? currentNode.left : currentNode.right;
+                }
+
+                break;
+            }
+        }
         return this;
+    }
+
+    getMinimumValue() {
+        let currentNode = this;
+        while(currentNode.left !== null) {
+            currentNode = currentNode.left;
+        }
+        return currentNode.value;
     }
 }
 
 // Do not edit the line below.
 exports.BST = BST;
+
+const test1 = new BST(10).insert(5).insert(15).insert(5).insert(2).insert(14).insert(22);
+const test2 = new BST(10).insert(15).insert(11).insert(22).remove(10);
+test2;
+test1;
+// chai.expect(test1.right.right.value).to.deep.equal(22);
