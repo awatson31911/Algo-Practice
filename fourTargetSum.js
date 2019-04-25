@@ -1,0 +1,3 @@
+function fourTargetSum (inputArr, targetNum) {
+    
+}
