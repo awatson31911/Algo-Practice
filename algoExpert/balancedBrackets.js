@@ -1,38 +1,26 @@
 function balancedBrackets(brackets) {
-  const openBracks = { '(': 'round', '[': 'square', '{': squig };
-  // const closeBracks = { round: ')', square: ']', squig: '}' }
+  const openBracks = '([{';
+  const closeBracks = ')]}';
+  const matchingBracks = { ')': '(', ']':'[', '}': '{' }
   const stack = [];
-  const firstBracket = brackets[0];
-  const lastBracket = brackets[brackets.length - 1];
+  const firstBrack = brackets[0];
+  const lastBrack = brackets[brackets.length - 1];
 
-  if (closeBrackets[firstBracket]) return false;
-  if (closeBrackets[lastBracket]) return false;
-  
-  for (let i = 0; i < brackets.length; i++) {
-    const currBracket = brackets[i];
-    
-    if (openBrackets[currBracket]) stack.push(currBracket);
-    else {
-      switch (currBracket) {
-        case ')':
-          if (stack[stack.length - 1] === openBrackets.round) stack.pop();
-          break;
-        
-        case ']':
-          if (stack[stack.length - 1] === openBrackets.square) stack.pop();
-          break;
-        
-        case '}':
-          if (stack[stack.length - 1] === openBrackets.squig) stack.pop();
-          break;
-        
-        default: return false;
-      }
+  if ( closeBracks.indexOf(firstBrack) !== -1 ) return false;
+  if ( openBracks.indexOf(lastBrack) !== -1 ) return false;
+
+  for (const bracket of brackets) {
+    if (openBracks.indexOf(bracket) !== -1) {
+      stack.push(bracket);
     }
-
+    else if ( closeBracks.indexOf(bracket) !== -1 ){
+      if ( stack.length === 0 ) return false;
+      if ( stack[stack.length - 1] === matchingBracks[bracket] ) stack.pop();
+      else return false;
+    } 
   }
 
-  if (stack.length) return false;
-
-  return true;
+  return stack.length === 0;
 }
+
+console.log(balancedBrackets('(()())((()()()))'))

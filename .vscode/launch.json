@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${file}"
+            "program": "/Users/Adubya/.nvm/versions/node/v11.15.0/bin/node"
         }
     ]
 }
