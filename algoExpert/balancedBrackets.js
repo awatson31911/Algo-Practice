@@ -6,14 +6,14 @@ function balancedBrackets(brackets) {
   const firstBrack = brackets[0];
   const lastBrack = brackets[brackets.length - 1];
 
-  if ( closeBracks.indexOf(firstBrack) !== -1 ) return false;
-  if ( openBracks.indexOf(lastBrack) !== -1 ) return false;
+  if ( closeBracks.includes(firstBrack)) return false;
+  if ( openBracks.includes(lastBrack)) return false;
 
   for (const bracket of brackets) {
-    if (openBracks.indexOf(bracket) !== -1) {
+    if (openBracks.includes(bracket)) {
       stack.push(bracket);
     }
-    else if ( closeBracks.indexOf(bracket) !== -1 ){
+    else if ( closeBracks.includes(bracket) ){
       if ( stack.length === 0 ) return false;
       if ( stack[stack.length - 1] === matchingBracks[bracket] ) stack.pop();
       else return false;
