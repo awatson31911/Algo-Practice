@@ -4,22 +4,23 @@ function subString(inputString, subString) {
     let wrongCount = 0;
     let startIndex = i;
     
-    for (let j = 0; j < subString.length; j++) {
+    for (subChar of subString) {
       const char = inputString[startIndex];
-      const subChar = subString[j];
-      if (char !== subChar) {
-        wrongCount++;
-      }
+
+      if (wrongCount > 1) break;
+      if (char !== subChar) wrongCount++;
+  
       startIndex++;
     }
-    if (wrongCount < 2) {
-      return i;
-    }
+
+    if (wrongCount > 1) continue;
+
+    return i;
   }
 
   return -1;
 }
 
-subString('submission', 'sub')
-subString('aaanthony', 'anthony')
-subString('aaaaaaaa', 'a')
+console.log(subString('submission', 'sub'))
+console.log(subString('aaanthony', 'anthony'))
+console.log(subString('aaaaaaaa', 'a'))
